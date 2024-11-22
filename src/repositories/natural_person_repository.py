@@ -5,6 +5,15 @@ from src.models.sqlite.entities.natural_person import NaturalPersonTable
 class NaturalPersonRepository:
    def __init__(self, db_connection):
       self.__db_connection = db_connection
+      
+   def create_natural_person(self, natural_person: NaturalPersonTable):
+      with self.__db_connection as database:
+         try:
+            database.session.add(natural_person)
+            database.session.commit()
+         except Exception as exception:
+            database.session.rollback()
+            raise exception
    
    def list_all(self) -> List[NaturalPersonTable]:
       with self.__db_connection as database:

@@ -1,6 +1,8 @@
 from unittest import mock
+import pytest
 from mock_alchemy.mocking import UnifiedAlchemyMagicMock
 from src.models.sqlite.entities.natural_person import NaturalPersonTable
+from src.models.sqlite.settings.connection import db_connect_handle
 from .natural_person_repository import NaturalPersonRepository
 
 class MockConnection:
@@ -22,6 +24,32 @@ class MockConnection:
    
    def __exit__(self, exc_type, exc_val, exc_tb):
       pass
+   
+@pytest.mark.skip(reason= "Integration test with database")
+def test_create_natural_person_integration():
+   db_connect_handle.connect_to_db()
+   repo = NaturalPersonRepository(db_connect_handle)
+   entity = NaturalPersonTable(
+      monthly_income=150000, age=30,
+      name="John Doe", phone_number="1234-5678",
+      email="john@example.com", category="Category D",
+      balance=100000
+   )
+   repo.create_natural_person(entity)
+   
+def test_create_entity():
+   mock_connection = MockConnection()
+   repo = NaturalPersonRepository(mock_connection)
+   entity = NaturalPersonTable(
+      monthly_income=150000, age=30,
+      name="John Doe", phone_number="1234-5678",
+      email="john@example.com", category="Category D",
+      balance=100000
+   )
+   repo.create_natural_person(entity)
+   
+   mock_connection.session.add.assert_called_once()
+   mock_connection.session.commit.assert_called_once()
 
 def test_list_all():
    mock_connection = MockConnection()

@@ -6,6 +6,15 @@ class LegalEntiytRepository:
    def __init__(self, db_connection):
       self.__db_connection = db_connection
       
+   def create_entity(self, legal_entity: LegalEntityTable):
+      with self.__db_connection as database:
+         try:
+            database.session.add(legal_entity)
+            database.session.commit()
+         except Exception as exception:
+            database.session.rollback()
+            raise exception
+      
    def list_all(self) -> List[LegalEntityTable]:
       with self.__db_connection as database:
          try:
