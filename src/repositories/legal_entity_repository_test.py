@@ -38,3 +38,16 @@ def test_list_all():
    assert response[1].id == 2
    assert response[1].trade_name == "Jane Doe"
    
+def test_delete_by_id():
+   mock_connection = MockConnection()
+   repo = LegalEntiytRepository(mock_connection)
+   repo.delete_by_id(1)
+   
+   mock_connection.session.query.assert_called_once_with(LegalEntityTable)
+   mock_connection.session.filter.assert_called_once_with(LegalEntityTable.id == 1)
+   mock_connection.session.delete.assert_called_once()
+   
+   
+   
+   
+   

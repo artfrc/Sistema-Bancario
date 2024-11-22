@@ -37,3 +37,11 @@ def test_list_all():
    assert response[0].name == "John Doe"
    assert response[1].id == 2
    assert response[1].name == "Jane Doe"
+   
+def test_delete_by_id():
+   mock_connection = MockConnection()
+   repo = NaturalPersonRepository(mock_connection)
+   repo.delete_by_id(1)
+   mock_connection.session.query.assert_called_once_with(NaturalPersonTable)
+   mock_connection.session.filter.assert_called_once_with(NaturalPersonTable.id == 1)
+   mock_connection.session.delete.assert_called_once()

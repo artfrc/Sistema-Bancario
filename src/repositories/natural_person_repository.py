@@ -14,4 +14,18 @@ class NaturalPersonRepository:
          
          except NoResultFound:
             return []
+         
+   def delete_by_id(self, person_id: int):
+      with self.__db_connection as database:
+         try:
+            (
+               database.session
+               .query(NaturalPersonTable)
+               .filter(NaturalPersonTable.id == person_id)
+               .delete()
+            )
+            database.session.commit()
+         except Exception as exception:
+            database.session.rollback()
+            raise exception
       
