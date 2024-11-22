@@ -14,4 +14,19 @@ class LegalEntiytRepository:
          
          except NoResultFound:
             return []
+   
+   def delete_by_id(self, entity_id: int):
+      with self.__db_connection as database:
+         try:
+            (
+               database.session
+               .query(LegalEntityTable)
+               .filter(LegalEntityTable.id == entity_id)
+               .delete()
+            )
+            database.session.commit()
+         except Exception as exception:
+            database.session.rollback()
+            raise exception
+            
             

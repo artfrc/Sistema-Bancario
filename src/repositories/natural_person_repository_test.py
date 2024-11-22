@@ -28,6 +28,10 @@ def test_list_all():
    repo = NaturalPersonRepository(mock_connection)
    response = repo.list_all()
    
+   mock_connection.session.query.assert_called_once_with(NaturalPersonTable)
+   mock_connection.session.all.assert_called_once()
+   mock_connection.session.filter.assert_not_called()
+   
    assert len(response) == 2
    assert response[0].id == 1
    assert response[0].name == "John Doe"
