@@ -50,8 +50,6 @@ def test_create_entity():
    
    mock_connection.session.add.assert_called_once()
    mock_connection.session.commit.assert_called_once()
-   
-   
 
 def test_list_all():
    mock_connection = MockConnection()

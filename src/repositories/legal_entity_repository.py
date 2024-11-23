@@ -1,8 +1,9 @@
 from typing import List
 from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.legal_entity import LegalEntityTable
+from src.models.sqlite.interfaces.legal_entity_repository_interface import LegalEntityRepositoryInterface
 
-class LegalEntiytRepository:
+class LegalEntiytRepository(LegalEntityRepositoryInterface):
    def __init__(self, db_connection):
       self.__db_connection = db_connection
       
