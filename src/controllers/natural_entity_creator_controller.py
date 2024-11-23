@@ -24,12 +24,16 @@ class NaturalEntityCreatorController:
       
       
    def __validate_monthly_income_age_phone_number_balance(self, monthly_income: float, age: int, balance: float, phone_number: str):
-      if monthly_income or age or balance < 0:
+      if monthly_income < 0 or age < 0 or balance < 0:
          raise Exception('Monthly income, age and balance must be greater than 0')
       
-      no_valid_characters = re.compile(r'[^0-9]')
+      no_valid_characters_only_numbers = re.compile(r'[^0-9]')
+      no_valid_characters_only_numbers_and_dot = re.compile(r'[^0-9.]')
       
-      if no_valid_characters.search(phone_number) or no_valid_characters.search(str(age)) or no_valid_characters.search(str(monthly_income)) or no_valid_characters.search(str(balance)):
+      if (
+            no_valid_characters_only_numbers.search(phone_number) or no_valid_characters_only_numbers.search(str(age)) or no_valid_characters_only_numbers_and_dot.search(str(monthly_income)) or 
+            no_valid_characters_only_numbers_and_dot.search(str(balance))
+      ):
          raise Exception('Age, monthly income, balance and phone number must be numbers')
       
    def __validate_name(self, name: str):
