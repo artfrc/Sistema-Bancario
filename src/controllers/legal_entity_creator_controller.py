@@ -22,14 +22,20 @@ class LegalEntityCreatorController:
       
       return self.__format_response(entity_data)
       
-   def __validate_billing_age_balance( self, billing: float, age: int, balance: float, phone_number: str):
-      if billing or age or balance < 0:
-         raise Exception('Billing, age and balance must be greater than 0')
-      
-      no_valid_characters = re.compile(r'[^0-9]')
-      
-      if no_valid_characters.search(str(age)) or no_valid_characters.search(str(billing)) or no_valid_characters.search(str(balance) or no_valid_characters.search(phone_number)):
-         raise Exception('Age, billing, balance and phone number must be numbers')
+   def __validate_billing_age_balance(self, billing: float, age: int, balance: float, phone_number: str):
+    if billing < 0 or age < 0 or balance < 0:
+        raise Exception('Billing, age and balance must be greater than 0')
+
+    no_valid_characters_age_phone_number = re.compile(r'[^0-9]')
+    no_valid_characters_billing_balance = re.compile(r'[^0-9.]')
+    
+    
+    if (no_valid_characters_age_phone_number.search(str(age)) or 
+        no_valid_characters_billing_balance.search(str(billing)) or 
+        no_valid_characters_billing_balance.search(str(balance)) or 
+        no_valid_characters_age_phone_number.search(phone_number)):
+        raise Exception('Age, billing, balance and phone number must be numbers')
+
       
    def __validate_trade_name(self, trade_name: str):
       # Expressão regular para validar se o nome da empresa contém apenas letras
