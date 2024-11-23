@@ -38,4 +38,22 @@ class NaturalPersonRepository(NaturalPersonRepositoryInterface):
          except Exception as exception:
             database.session.rollback()
             raise exception
+         
+   def withdraw_money(self, entity_id: int, amount: float) -> NaturalPersonTable:
+      with self.__db_connection as database:
+         try:
+            natural_person = (
+               database.session
+               .query(NaturalPersonTable)
+               .filter(NaturalPersonTable.id == entity_id)
+               .first()
+            )
+            natural_person.balance -= amount
+            database.session.commit()
+            
+            return natural_person
+         
+         except Exception as exception:
+            database.session.rollback()
+            raise exception
       

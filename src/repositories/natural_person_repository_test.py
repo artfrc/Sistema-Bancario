@@ -12,10 +12,10 @@ class MockConnection:
             (
                [mock.call.query(NaturalPersonTable)],
                [
-                  NaturalPersonTable(id=1, name="John Doe"),
-                  NaturalPersonTable(id=2, name="Jane Doe")
+                  NaturalPersonTable(id=1, name="John Doe", balance=1000)
                ]
-            )
+            ),
+            
          ]
       )
    
@@ -60,11 +60,9 @@ def test_list_all():
    mock_connection.session.all.assert_called_once()
    mock_connection.session.filter.assert_not_called()
    
-   assert len(response) == 2
+   assert len(response) == 1
    assert response[0].id == 1
    assert response[0].name == "John Doe"
-   assert response[1].id == 2
-   assert response[1].name == "Jane Doe"
    
 def test_delete_by_id():
    mock_connection = MockConnection()
@@ -73,3 +71,14 @@ def test_delete_by_id():
    mock_connection.session.query.assert_called_once_with(NaturalPersonTable)
    mock_connection.session.filter.assert_called_once_with(NaturalPersonTable.id == 1)
    mock_connection.session.delete.assert_called_once()
+   
+def test_withdraw_money():
+   mock_connection = MockConnection()
+   repo = NaturalPersonRepository(mock_connection)
+   response = repo.withdraw_money(1, 500)
+   
+   mock_connection.session.query.assert_called_once_with(NaturalPersonTable)
+   mock_connection.session.filter.assert_called_once_with((NaturalPersonTable).id == 1)
+   mock_connection.session.commit.assert_called_once()
+   
+   assert response.balance == 500

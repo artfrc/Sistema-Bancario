@@ -14,4 +14,4 @@ class LegalEntityTable(Base):
     balance = Column(Float, nullable=False)  
 
     def __repr__(self):
-        return f'Legal Entity [ Trade Name: {self.trade_name}, phone number: {self.phone_number}, email: {self.corporate_email} ]'
+        return f'Legal Entity [ Trade Name: {self.trade_name}, phone number: {self.phone_number}, email: {self.corporate_email}, ]'

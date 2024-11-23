@@ -38,5 +38,23 @@ class LegalEntiytRepository(LegalEntityRepositoryInterface):
          except Exception as exception:
             database.session.rollback()
             raise exception
+         
+   def withdraw_money(self, entity_id: int, amount: float) -> LegalEntityTable:
+      with self.__db_connection as database:
+         try:
+            entity = (
+               database.session
+               .query(LegalEntityTable)
+               .filter(LegalEntityTable.id == entity_id)
+               .first()
+            )
+            entity.balance -= amount
+            database.session.commit()
+            
+            return entity
+         
+         except Exception as exception:
+            database.session.rollback()
+            raise exception
             
             
