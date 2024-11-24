@@ -15,6 +15,21 @@ class LegalEntiytRepository(LegalEntityRepositoryInterface):
          except Exception as exception:
             database.session.rollback()
             raise exception
+         
+   def get_entity_by_id(self, entity_id: int) -> LegalEntityTable: 
+      with self.__db_connection as database:
+         try:
+            entity = (
+               database.session
+               .query(LegalEntityTable)
+               .filter(LegalEntityTable.id == entity_id)
+               .first()
+            )
+            return entity
+            
+         except NoResultFound:
+            return None
+               
       
    def list_all(self) -> List[LegalEntityTable]:
       with self.__db_connection as database:

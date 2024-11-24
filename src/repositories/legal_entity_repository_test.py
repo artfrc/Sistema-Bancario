@@ -50,6 +50,17 @@ def test_create_entity():
    mock_connection.session.add.assert_called_once()
    mock_connection.session.commit.assert_called_once()
 
+def test_get_entity_by_id():
+   mock_connection = MockConnection()
+   repo  = LegalEntiytRepository(mock_connection)
+   reponse = repo.get_entity_by_id(1)
+   
+   mock_connection.session.query.assert_called_once_with(LegalEntityTable)
+   mock_connection.session.filter.assert_called_once_with(LegalEntityTable.id == 1)
+   
+   assert reponse.id == 1
+   assert reponse.trade_name == "John Doe"
+
 def test_list_all():
    mock_connection = MockConnection()
    repo = LegalEntiytRepository(mock_connection)

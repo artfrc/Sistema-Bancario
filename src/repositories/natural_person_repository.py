@@ -15,6 +15,20 @@ class NaturalPersonRepository(NaturalPersonRepositoryInterface):
          except Exception as exception:
             database.session.rollback()
             raise exception
+         
+   def get_person_by_id(self, person_id: int) -> NaturalPersonTable: 
+      with self.__db_connection as database:
+         try:
+            person = (
+               database.session
+               .query(NaturalPersonTable)
+               .filter(NaturalPersonTable.id == person_id)
+               .first()
+            )
+            return person
+            
+         except NoResultFound:
+            return None
    
    def list_all(self) -> List[NaturalPersonTable]:
       with self.__db_connection as database:
