@@ -1,4 +1,4 @@
-from .natural_person_finder_controller import NaturalEntityFinderController
+from .natural_person_finder_controller import NaturalPersonFinderController
 
 class MockNaturalPerson:
    def __init__(self, age, name, phone_number, email):
@@ -17,7 +17,7 @@ class MockNaturalPersonRepository:
       )
 
 def test_find_entity():
-   controller = NaturalEntityFinderController(MockNaturalPersonRepository())
+   controller = NaturalPersonFinderController(MockNaturalPersonRepository())
    reponse = controller.find_entity(123)
    
    expected_response = {

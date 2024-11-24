@@ -2,7 +2,7 @@ from typing import Dict
 from src.models.sqlite.interfaces.natural_person_repository_interface import NaturalPersonRepositoryInterface
 from src.models.sqlite.entities.natural_person import NaturalPersonTable
 
-class NaturalEntityFinderController:
+class NaturalPersonFinderController:
    def __init__(self, entity_repository: NaturalPersonRepositoryInterface):
       self.__entity_repository = entity_repository
       

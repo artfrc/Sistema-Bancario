@@ -1,7 +1,7 @@
-from .natural_person_creator_controller import NaturalEntityCreatorController
 import pytest
+from .natural_person_creator_controller import NaturalPersonCreatorController
 
-class MockNaturalEntityRepository:
+class MockNaturalPersonRepository:
    def create_natural_person(self, monthly_income: float, age: int, name: str, phone_number: str, email: str, category: str, balance: float):
       pass
    
@@ -16,7 +16,7 @@ def test_create_entity():
       'balance': 10000.0
    }
    
-   controller = NaturalEntityCreatorController(MockNaturalEntityRepository())
+   controller = NaturalPersonCreatorController(MockNaturalPersonRepository())
    response = controller.create_entity(entity_data)
    
    assert response["data"]["type"] == "Natural Entity"
@@ -34,6 +34,6 @@ def test_create_entity_error():
       'balance': 10000.0
    }
    
-   controller = NaturalEntityCreatorController(MockNaturalEntityRepository())
+   controller = NaturalPersonCreatorController(MockNaturalPersonRepository())
    with pytest.raises(Exception):
       controller.create_entity(entity_data)
