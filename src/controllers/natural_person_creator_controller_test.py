@@ -1,4 +1,4 @@
-from .natural_entity_creator_controller import NaturalEntityCreatorController
+from .natural_person_creator_controller import NaturalEntityCreatorController
 import pytest
 
 class MockNaturalEntityRepository:

@@ -1,4 +1,4 @@
-from .natural_entity_finder_controller import NaturalEntityFinderController
+from .natural_person_finder_controller import NaturalEntityFinderController
 
 class MockNaturalPerson:
    def __init__(self, age, name, phone_number, email):
