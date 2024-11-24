@@ -9,6 +9,10 @@ class NaturalPersonRepositoryInterface(ABC):
       pass
    
    @abstractmethod
+   def get_person_by_id(self, entity_id: int):
+      pass
+   
+   @abstractmethod
    def list_all(self) -> List[NaturalPersonTable]:
       pass
    

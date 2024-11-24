@@ -10,6 +10,10 @@ class LegalEntityRepositoryInterface(ABC):
       pass
    
    @abstractmethod
+   def get_entity_by_id(self, entity_id: int):
+      pass
+   
+   @abstractmethod
    def list_all(self) -> List[LegalEntityTable]:
       pass
    
